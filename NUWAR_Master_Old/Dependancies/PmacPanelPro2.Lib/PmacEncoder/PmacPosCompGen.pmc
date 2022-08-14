@@ -1,0 +1,17 @@
+close
+
+; - Service routine to service encoder register
+
+open plc 19
+clear
+
+if (m116 = 1)
+
+  m103 = m105     ; Update next compare position
+  m105 = m105 + p101
+
+  m111 = 0            ; Reset control bit
+  m111 = 1
+endif
+
+close

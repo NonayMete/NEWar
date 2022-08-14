@@ -1,0 +1,30 @@
+Lab Instruction Booklet
+2013
+>> [timetheta timepos]=Ellipse(drawmode,'SineonRamp',0,5,0.2,[-0.2 0.2 -0.7]',[0.2 0.2 -0.7]',[0.1 0.2 -0.7]');
+
+<doesn't work>
+
+Thesis 1998
+>> [timetheta1,timepos]=Ellipse(drawmode,'SineonRamp',0,1,0.05,[-.3 0 -.5]',[0.3 0 -.5]',[0 0 -0.4]',1.5,-35.26,60,0);
+<Works>
+
+>> [timetheta1,timepos]=Ellipse(drawmode,'SineonRamp',0,5,0.2,[-.3 0 -.5]',[0.3 0 -.5]',[0 0 -0.4]',1.5,-35.26,60,0);
+
+>> [timetheta1,timepos]=Ellipse(drawmode,'SineonRamp',0,5,0.2,[-.3 0 -.5]',[0.3 0 -.5]',[0 0 -0.4]',1.5,-35.26,60,0);
+<Works>
+
+>> [timetheta1,timepos]=Ellipse(drawmode,'SineonRamp',0,5,0.2,[-0.2 0.2 -0.7]',[0.2 0.2 -0.7]',[0.1 0.2 -0.7]',1.5,-35.26,60,0);
+<Doesn't Work>
+Hypothesis
+<Different Workspace Definition>
+
+[theta] = IK([-0.2 0.2 -0.7]', drawmode, -35.26,60)
+
+
+[timetheta timepos]=Ellipse(drawmode,'SineonRamp',0,5,0.2,[-0.2 0.2 -0.77]',[0.2 0.2 -0.77]',[0.1 0.2 -0.77]');
+
+
+             0   69.0522   68.6024   23.3698
+  10.0000   34.8544   44.3735   78.2562
+
+  0   58.5110  100.7430   -9.9404

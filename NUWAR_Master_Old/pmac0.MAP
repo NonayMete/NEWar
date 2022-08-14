@@ -1,0 +1,18 @@
+;Map created by PMAC Win32 Driver from file: C:\NUWAR_Master\pmac0.56K
+;
+
+
+; DEFINES sorted by KEY --------------------------
+_DPRAMBASE_                      $D000
+_DPRAMMAX_                       $1B240
+_DPRAMSIZE_                      $E000
+_DPRAMUSERBASE_                  $D240
+_PMAC1_                          
+
+
+; DEFINES sorted by VALUE ------------------------
+                                 _PMAC1_
+$1B240                           _DPRAMMAX_
+$D000                            _DPRAMBASE_
+$D240                            _DPRAMUSERBASE_
+$E000                            _DPRAMSIZE_

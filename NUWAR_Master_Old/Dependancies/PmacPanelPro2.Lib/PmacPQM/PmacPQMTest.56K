@@ -1,0 +1,40 @@
+CLOSE			; Always close any open buffers
+
+; PmacPQMTest.pmc
+; USE CS &1		; Remember - this is parsed by PMACView during download
+
+&1			; Define the CS
+#1->1000X
+
+M1->*			; Undefine and redefine M1 as standard output port
+M1->Y:$FFC2,8,8,U
+
+OPEN PROG 32		; Open buffer - parsed during download
+CLEAR			; Empty buffer - otherwise this is appended to buffer!
+
+LINEAR			; Set move modes
+ABS
+
+TA(P1)			; Set move parameters - Accel time is P1
+TS250
+TM1500
+
+M1 == 1			; Show a bit on the port and move X to position P2
+X(P2)
+DELAY(P3)		; Delay for P3 mS
+
+M1 == 2			; Update the port
+X(P4)			; Move X to position P4
+DELAY1500
+
+TA250			;  New move parameters
+TS125
+TM750
+
+M1 == 4			; Return home
+X0
+DWELL 100
+M1 == 0
+
+CLOSE
+

@@ -1,0 +1,50 @@
+;***************PLC Set-up variables (to be saved) ********************
+
+CLOSE
+
+M320->X:$C008,20,1	; Variable for HMFL3 input
+
+I325=$C008			; Use Flags3 for Motor 3
+
+M333->X:$00B5,13,1	; Desired Velocity Zero bit
+M345->Y:$0994,10,1	; Home complete bit
+M350->D:$009E		; Present Desired Velocity
+
+;**************** PLC program to execute routine *********************
+
+OPEN PLC 12 CLEAR
+
+IF (M320=1)	; Already in trigger?
+
+  I323=10	; Home speed 10 cts/msec positive direction
+  I326=1600	; Home offset +100 counts (to make sure clear)
+  I912=11	; Capture on falling flag and rising index
+  I913=0	; Use HMFL3 as flag
+
+  CMD"#3HM"	; "Home" out of switch
+
+  WHILE (M345=1)	; Waits for Home Search to start
+  ENDWHILE
+
+  WHILE (M333=0)	;Waits for Home motion to complete
+  ENDWHILE
+
+ENDIF
+
+I323=-10	; Home speed 10 cts/msec negative direction
+I326=0	; No home offset
+I912=3	; Capture on rising flag and rising index
+I913=0		; Use HMFL3 as flag
+
+CMD"#3HM"		; Do actual homing move
+
+WHILE (M345=1)	; Waits for Home Search to start
+ENDWHILE
+
+WHILE (M333=0)	; Waits for Home motion to complete
+ENDWHILE
+
+DIS PLC12	; Disables PLC once Home is found
+
+CLOSE			; End of program
+

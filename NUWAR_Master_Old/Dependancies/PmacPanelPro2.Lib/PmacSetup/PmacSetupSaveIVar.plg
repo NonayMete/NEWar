@@ -1,0 +1,47 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PmacSetupSaveIVar - Win32 PmacCIN--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Farooq\LOCALS~1\Temp\RSP2E.tmp" with contents
+[
+/nologo /Zp1 /MD /W3 /Gm /GX /ZI /Od /I "C:\Program Files\National Instruments\LabVIEW 8.2\cintools" /I "D:\Software Engineering\DTDriver\Pcomm32W" /I "D:\Software Engineering\DTDriver\Include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /Fp"PmacDPR_/PmacSetupSaveIVar.pch" /YX /Fo"PmacDPR_/" /Fd"PmacDPR_/" /FD /c 
+"D:\Software Engineering\Applications\PmacPanelPRO2Dll\PMACPanelPro2.lib\PmacSetup\PmacSetupSaveIVar.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Farooq\LOCALS~1\Temp\RSP2E.tmp" 
+Creating temporary file "C:\DOCUME~1\Farooq\LOCALS~1\Temp\RSP2F.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"PmacDPR_/PmacSetupSaveIVar.pdb" /debug /machine:I386 /def:"C:\Program Files\National Instruments\LabVIEW 8.2\cintools\lvsbmain.def" /out:"PmacDPR_/PmacSetupSaveIVar.dll" /implib:"PmacDPR_/PmacSetupSaveIVar.lib" /pdbtype:sept 
+".\PmacDPR_\PmacSetupSaveIVar.obj"
+"C:\WINDOWS\system32\PComm32W.lib"
+"C:\Program Files\National Instruments\LabVIEW 8.2\cintools\cin.obj"
+"C:\Program Files\National Instruments\LabVIEW 8.2\cintools\lvsb.lib"
+"C:\Program Files\National Instruments\LabVIEW 8.2\cintools\labview.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\Farooq\LOCALS~1\Temp\RSP2F.tmp"
+Creating temporary file "C:\DOCUME~1\Farooq\LOCALS~1\Temp\RSP30.bat" with contents
+[
+@echo off
+C:\Program Files\National Instruments\LabVIEW 8.2\cintools\lvsbutil  -c PmacSetupSaveIVar  -d d:\softwa~1\pmacpanelpro\pmacpanel.lib\pmacsetup\pmacdpr_
+]
+Creating command line "C:\DOCUME~1\Farooq\LOCALS~1\Temp\RSP30.bat"
+Compiling...
+PmacSetupSaveIVar.c
+d:\software engineering\applications\pmacpanelpro2dll\pmacpanelpro2.lib\pmacsetup\pmacsetupsaveivar.c(37) : warning C4013: 'PmacGetResponseA' undefined; assuming extern returning int
+Linking...
+   Creating library PmacDPR_/PmacSetupSaveIVar.lib and object PmacDPR_/PmacSetupSaveIVar.exp
+PmacSetupSaveIVar.obj : error LNK2001: unresolved external symbol _PmacGetResponseA
+PmacDPR_/PmacSetupSaveIVar.dll : fatal error LNK1120: 1 unresolved externals
+Error executing link.exe.
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+PmacSetupSaveIVar.dll - 2 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

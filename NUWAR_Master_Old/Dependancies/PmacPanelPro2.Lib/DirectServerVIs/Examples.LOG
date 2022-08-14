@@ -1,0 +1,17 @@
+;Log created by PMAC Win32 Driver from file: D:\Software Engineering\Applications\PmacPanelPro2\Examples.PMC
+;
+000001:            Processing Macro File: D:\Software Engineering\Applications\PmacPanelPro2\Examples.PMC
+000002:            $C1C50
+000003:            Total Lines: 1676
+000004:            Compiling for PLCC: D:\Software Engineering\Applications\PmacPanelPro2\Examples.PMA = D:\Software Engineering\Applications\PmacPanelPro2\Examples.56K
+000005:            PLCC Compiling PMAC file: D:\Software Engineering\Applications\PmacPanelPro2\Examples.PMA
+000006:            Success in Compiling to output file: D:\Software Engineering\Applications\PmacPanelPro2\Examples.56K
+000007:            No PLCC(s) were compiled
+000008:            Downloading file: D:\Software Engineering\Applications\PmacPanelPro2\Examples.56K
+000009:            **PMAC Error 5, Command not allowed unless buffer is open.
+000010:              File: D:\Software Engineering\Applications\PmacPanelPro2\Examples.PMC
+000011:              Line: 1667, "  SEND"Motor 1 I2T Limit Trapped""
+000012:            Downloaded 1384 lines in 157 msecs
+000013:            Writing macro dictionary table: D:\Software Engineering\Applications\PmacPanelPro2\Examples.TBL
+000014:            Total Warnings: 0
+000015:            Total Errors: 1

@@ -1,0 +1,36 @@
+CLOSE 
+CLOSE
+
+; Define encoder registers
+
+M101->X:$C001,0,24,S ; Actual position
+M103->X:$C003,0,24,S ; Compare register
+M105->X:$07F0,0,24,S ; Scratch register for rollover
+
+; Define encoder compare-equal register control bits
+
+M111->X:$C000,11,1        ; Compare equal flag latch/control
+M112->X:$C000,12,1        ; Compare equal output enable
+M113->X:$C000,13,1        ; Compare equal output invert
+M116->X:$C000,16,1        ; Compare equal flag
+
+P101 = 50 ; Count intecrement
+
+; Configure the compare pulse
+
+OPEN PLC 18
+CLEAR
+
+; -- Setup compare-equal
+
+M105 = M101+P101      ; Save Increment + actual position
+
+M103 = M105                ; Copy next position into compare register
+M105 = M105 + P101    ; Update next compare position
+
+M113 = 0                      ; No invert on output bit
+
+ENABLE PLC 19
+DISABLE PLC 18
+
+CLOSE

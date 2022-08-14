@@ -1,0 +1,6 @@
+﻿  Copying sFoundation Files
+  cwd=C:\Program Files (x86)\Teknic\ClearView\sdk\examples\ srcArch=Win32 srcConfig=Debug dllDir=..\sFoundation Source\sFoundation\win\Debug\Win32 destDir="C:\Program Files (x86)\Teknic\ClearView\sdk\examples\3b-Example-Homing\Win32\Debug\"
+          1 file(s) copied.
+          1 file(s) copied.
+          1 file(s) copied.
+  Example-Homing.vcxproj -> C:\Program Files (x86)\Teknic\ClearView\sdk\examples\3b-Example-Homing\Win32\Debug\Example-Homing.exe

@@ -1,0 +1,9 @@
+;Log created by PMAC Win32 Driver from file: C:\Program Files\National Instruments\LabVIEW 6\PMACPanel.lib\PmacPQM\PmacPQMTest.pmc
+;
+000001:            Compiling for PLCC: C:\Program Files\National Instruments\LabVIEW 6\PMACPanel.lib\PmacPQM\PmacPQMTest.PMA = C:\Program Files\National Instruments\LabVIEW 6\PMACPanel.lib\PmacPQM\PmacPQMTest.56K
+000002:            PLCC Compiling PMAC file: C:\Program Files\National Instruments\LabVIEW 6\PMACPanel.lib\PmacPQM\PmacPQMTest.pmc
+000003:            Success in Compiling to output file: C:\Program Files\National Instruments\LabVIEW 6\PMACPanel.lib\PmacPQM\PmacPQMTest.56K
+000004:            No PLCC(s) were compiled
+000005:            Downloading file: C:\Program Files\National Instruments\LabVIEW 6\PMACPanel.lib\PmacPQM\PmacPQMTest.56K
+000006:            Total Warnings: 0
+000007:            Total Errors: 0

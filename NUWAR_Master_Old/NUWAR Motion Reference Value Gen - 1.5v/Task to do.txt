@@ -1,0 +1,10 @@
+%... Read up ROS systems
+%
+
+% Calculating SPLINE1 Torque commands
+
+
+% Difference betweeen SPLINE1 corrected and Actual Sineonramp TRajectory PRofiles
+
+
+%Memory to map to PMAC

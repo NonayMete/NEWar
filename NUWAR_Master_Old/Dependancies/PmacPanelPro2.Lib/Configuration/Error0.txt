@@ -1,0 +1,1 @@
+Verify Errors in file C:\NUWAR_Master\Dependancies\PmacPanelPro2.Lib\Configuration\Ivar.cfg:

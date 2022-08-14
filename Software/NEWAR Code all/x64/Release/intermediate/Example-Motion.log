@@ -1,0 +1,39 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\x64\Release\intermediate\) contains files shared from another project (NEWAR Code.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Newar-Motion.cpp
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(22,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'unsigned __int64'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(22,9): message : consider using '%zd' in the format string
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(38,18): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(67,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(67,12): message : consider using '%zd' in the format string
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(76,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(76,12): message : consider using '%zd' in the format string
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(81,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(81,12): message : consider using '%zd' in the format string
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(98,11): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Homing.h(98,11): message : consider using '%zd' in the format string
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Angles.h(32,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Angles.h(34,10): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 3 has type 'double'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Angles.h(40,10): warning C4477: 'printf' : format string '%f' requires an argument of type 'double', but variadic argument 1 has type 'sFnd::ValueDouble'
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Angles.h(44,15): warning C4101: 'theErr': unreferenced local variable
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Newar-Motion.cpp(72,12): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type '_Ty'
+          with
+          [
+              _Ty=std::string
+          ]
+C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\Newar-Motion.cpp(100,23): warning C4244: 'argument': conversion from '_Rep' to 'uint32_t', possible loss of data
+          with
+          [
+              _Rep=double
+          ]
+  Copying sFoundation Files
+  cwd=C:\Users\Public\NEWAR Parallel Robot\Software\ srcArch=x64 srcConfig=Release dllDir=..\sFoundation Source\sFoundation\win\Release\x64 destDir="C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\x64\Release\"
+  The system cannot find the path specified.
+  The system cannot find the path specified.
+  The system cannot find the path specified.
+     Creating library C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\x64\Release\NEWAR_Code.lib and object C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\x64\Release\NEWAR_Code.exp
+  Generating code
+  4 of 646 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    34 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Example-Motion.vcxproj -> C:\Users\Public\NEWAR Parallel Robot\Software\NEWAR Code\x64\Release\NEWAR_Code.exe

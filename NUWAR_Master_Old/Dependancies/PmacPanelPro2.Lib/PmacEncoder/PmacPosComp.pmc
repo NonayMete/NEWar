@@ -1,0 +1,52 @@
+close
+
+; Define encoder registers
+
+m101->x:$c001,0,24,s ; Actual position
+m103->x:$c003,0,24,s ; Compare register
+m105->x:$07f0,0,24,s ; Scratch register for rollover
+
+; Define encoder compare-equal register control bits
+
+m111->x:$c000,11,1
+m112->x:$c000,12,1
+m113->x:$c000,13,1
+m116->x:$c000,16,1
+
+p101 = 50 ; Count intecrement
+
+; Configure the compare pulse
+
+open plc18
+clear
+
+; -- Setup compare-equal
+
+m112 = 1                      ; Enable output bit on JEQU
+m105 = m101+p101      ; Save Increment + actual position
+
+m103 = m105                ; Copy next position into compare register
+m105 = m105 + p101    ; Update next compare position
+
+m113 = 0                      ; No invert on output bit
+
+enable plc 19
+disable plc 18
+
+close
+
+; - Service routine to service encoder register
+
+open plc 19
+clear
+
+if (m116 = 1)
+
+  m103 = m105     ; Update next compare position
+  m105 = m105 + p101
+
+  m111 = 0            ; Reset control bit
+  m111 = 1
+endif
+
+close

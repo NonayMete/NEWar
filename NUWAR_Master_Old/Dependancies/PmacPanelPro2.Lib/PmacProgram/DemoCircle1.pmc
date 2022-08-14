@@ -1,0 +1,78 @@
+; USE CS &3
+
+&3
+#3->10x
+#4->10y
+
+open prog 10 clear
+
+hm1..4
+
+f2000
+ta10
+normal k-1
+lin
+
+goto 1
+
+; --
+
+n 62
+dwell 01
+m1 = 0
+
+f2000
+dwell 100
+ret
+
+; --
+
+n 63
+dwell 01
+m1 = 1
+f1000
+dwell 100
+ret
+
+n 1
+gosub 62
+
+x2082.4000 y1778.0000
+gosub 63
+
+; -- Full circle move (end point = start point)
+
+cir 1 x2082.4000 y1778.0000 i-606.2 j0.0000 lin
+gosub 62
+x1880.9716 y2233.2616
+gosub 63
+
+cir 2 x1070.7003 y2236.1163 i404.7716 j345.5384 lin
+gosub 62
+x1930.4225 y1383.0427
+gosub 63
+
+cir 2 x1937.9537 y2179.4222 i345.5775 j394.9573 lin
+gosub 62
+x1012.0638 y2163.0278
+gosub 63
+
+cir 2 x1013.4259 y1394.1638 i-335.6638 j-385.0278 lin
+gosub 62
+x1071.4245 y1323.7339
+gosub 63
+
+cir 2 x1885.0458 y1318.9081 i404.7755 j-345.5339 lin
+gosub 62
+x74.0000 y178.2000
+gosub 63
+
+x2870.6000 y178.2000
+x2870.6000 y3391.2000
+x74.0 y3391.2000
+x74.0 y178.2000
+gosub 62
+
+x0.0000 y0.0000
+close
+

@@ -1,0 +1,21 @@
+CLOSE
+
+OPEN PROG 102 CLEAR
+
+I223=10 	; Home speed 10 cts/msec positive direction
+I225=$2C004	; Disable +/-LIM2 as limits
+I226=0	; No home offset
+I907=2	; Capture on rising edge of a flag
+I908=1	; Use -LIM2 as flag (positive end limit!)
+
+HOME2		; Home into limit
+
+I223=-10	; Home speed 10 cts/msec negative direction
+I225=$C004	; Re-enable +/-LIM2 as limits
+I907=11	; Capture on flag low and index channel high
+I908=0	; Use HMFL2 (home flag) as trigger flag
+
+HOME2		; Do actual homing move
+
+CLOSE
+

@@ -1,0 +1,24 @@
+
+ ----------------   SOLIDS    ---------------- 
+
+Mass:                    270340.4024 
+Volume:                  270340.4024 
+Bounding box:         X: -47.0000  --  40.2762 
+                      Y: -47.0000  --  47.0000 
+                      Z: -24.0000  --  24.0000 
+Centroid:             X: -3.3357 
+                      Y: 0.0617 
+                      Z: 0.0803 
+Moments of inertia:   X: 232615513.5645  
+                      Y: 202282241.2197  
+                      Z: 325625283.2319  
+Products of inertia: XY: -157003.9841  
+                     YZ: 0.0395  
+                     ZX: -0.0272  
+Radii of gyration:    X: 29.3335 
+                      Y: 27.3542 
+                      Z: 34.7059 
+Principal moments and X-Y-Z directions about centroid:
+                      I: 232612991.8540 along [1.0000 0.0030 0.0008]
+                      J: 199272088.3169 along [-0.0030 1.0000 0.0000]
+                      K: 322616213.6339 along [-0.0008 0.0000 1.0000]

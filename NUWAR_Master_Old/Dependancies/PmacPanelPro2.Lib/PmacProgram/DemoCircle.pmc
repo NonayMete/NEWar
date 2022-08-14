@@ -1,0 +1,23 @@
+; USE CS &3
+
+&3
+#3->10x
+#4->10y
+
+open prog 11 clear
+
+hm1..4
+
+i13 = 100
+
+f2000
+ta10
+normal k-1
+lin
+
+x3000 y1000
+cir 1 x3000 y1000 i-1000 j 1000
+
+;x0.0000 y0.0000
+close
+

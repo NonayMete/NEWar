@@ -1,0 +1,1675 @@
+;This file contains the code of every example program present on the
+;PMAC Software Reference manual. Comments have been ommited, please
+;refer to the corresponding documentation for further information.
+
+;----------------------------------------------------------------------
+;Example 1: Suggested M-Variables
+
+;Please download following files for respective corresponding file
+; p1mvar.pmc:			PMAC1
+; p2mvar.pmc:			PMAC2 and PMAC Ultralite
+; tp1mvar.pmc:			Turbo PMAC
+; tp2mvar.pmc:			Turbo PMAC2 and Turbo PMAC Ultralite
+
+;----------------------------------------------------------------------
+;Example 2:  A Simple Move
+
+;******************** Set-up and Definitions ********************
+&1
+CLOSE
+UNDEFINE ALL
+#1->X
+;******************** Motion Program Text ***********************
+OPEN PROG 1 CLEAR
+LINEAR
+ABS
+TA500
+TS0
+F5000
+X10000
+DWELL500
+X0
+CLOSE
+
+; To run this program: &1 B1 R
+
+;----------------------------------------------------------------------
+;Example 3:  A More Complex Move
+
+;******************** Set-up and Definitions ********************
+&2
+CLOSE
+UNDEFINE ALL
+#5->1000X
+;******************** Motion Program Text ***********************
+OPEN PROG 2 CLEAR
+LINEAR
+INC
+TA500
+TS250
+P1=0
+While (P1 < 10)
+  X10
+  DWELL500
+  X-10
+  DWELL500
+  P1=P1+1
+EndWhile
+CLOSE
+
+;To run this program: &2 B2 R
+
+;----------------------------------------------------------------------
+;Example 4:  Conditional Branching
+
+;******************** Set-up and Definitions *******************
+CLOSE
+UNDEFINE ALL
+&1
+#2->27.77777778A
+M1->Y:$FFC2,8,1
+M11->Y:$FFC2,0,1
+I190=60000
+;******************** Motion Program Text ***********************
+OPEN PROG 3 CLEAR
+HOME2
+LINEAR
+F20
+Q50=0
+While (Q50 < 36)
+  If (M11 = 1)
+    A((Q50+1)*10)
+  Else
+    A(-(Q50+1)*10)
+  EndIf
+  DWELL20
+  M1=1M1=0
+  DWELL20
+  A0
+  Q50=Q50+1
+EndWhile
+CLOSE
+
+;To run this program: &1 B3 R
+
+;----------------------------------------------------------------------
+;Example 5:  Linear and Circular interpolation
+
+;********************* Set-up and Definitions ******************
+CLOSE
+UNDEFINE ALL
+&1
+#3->10000X
+#4->10000Y
+;*************** Motion Program Text for Rotary Axis ***********
+OPEN PROG 4 CLEAR
+RAPIDX1Y4
+F500
+LINEARY13
+CIRCLE1X2Y14I1J0
+LINEARX3
+CIRCLE1X4Y13I0J-1
+LINEARY7
+CIRCLE1X7Y4I3J0
+LINEARX13
+CIRCLE1X14Y3I0J-1
+LINEARY2
+CIRCLE1X13Y1I-1J0
+LINEARX4
+CIRCLE1X1Y4I0J3
+DWELL100
+RAPIDX0Y0
+CLOSE
+
+;To run this program: &1 B4 R
+
+;----------------------------------------------------------------------
+;Example 6:  A Simple G-Code Program
+
+;******************** Part Program Text **************************
+OPEN PROG 5 CLEAR
+G17G90
+G97S1800
+F500
+G0X10Y5
+M3
+G4P2
+G1Z0
+X30.25Y5
+G3X35.25Y10J5
+G1X35.25Y50.1
+G3X30.25Y55.1I-5
+G1X10Y55.1
+G3X5Y50.1J-5
+G1X5Y10
+G3X10Y5I5
+G1Z5M5
+G0X0Y0
+CLOSE
+;*****************************************************************
+OPEN PROG 1000 CLEAR
+RAPIDRETURN
+N1000LINEARRETURN
+N2000CIRCLE1RETURN
+N3000CIRCLE2RETURN
+N4000READ(P)
+If (Q100&32768 > 0)
+  DWELL(Q116*1000)
+EndIf
+RETURN
+N17000NORMALK-1RETURN
+N18000NORMALJ-1RETURN
+N19000NORMALI-1RETURN
+N90000ABSRETURN
+N91000INCRETURN
+N97000READ(S)
+If (Q100&262144 > 0)
+  I422=Q119/30
+EndIf
+RETURN
+CLOSE
+;*****************************************************************
+OPEN PROG 1001 CLEAR
+N3000COMMAND"#4J+"RETURN
+N4000COMMAND"#4J-"RETURN
+N5000COMMAND"#4J/"RETURN
+CLOSE
+
+;To run this program: &1 B5 R
+;----------------------------------------------------------------------
+;Example 7:  A Robotic Application
+
+;******************** Set-up and Definitions ********************
+CLOSE
+UNDEFINE ALL
+&1
+#1->1024X
+#2->2000Y
+#3->2000Z
+#4->5000A
+#5->512B
+#6->277.77778C
+M70->F:$D200
+M71->F:$D201
+M72->F:$D202
+M73->F:$D203
+M74->F:$D204
+M75->F:$D205
+M113->X:$C000,13,1
+;******************** Motion Program Text ***********************
+OPEN PROG 75 CLEAR
+SPLINE1
+TA5
+INC
+X0Y0Z0A0B0C0
+X0Y0Z0A0B0C0
+ABS
+While (P1 > 0)
+  X(M70)Y(M71)Z(M72)A(M73)B(M74)C(M75)M113=1M113=0
+EndWhile
+CLOSE
+;To run this program: &1 B75 R
+;----------------------------------------------------------------------
+;Example 8:  Rotary Tangent to X-Y System
+
+;*********************  Set-up and Definitions ********************
+CLOSE
+UNDEFINE ALL
+&1 #1->10000X
+#2->10000Y
+&2 #3->40C
+I15=0
+I327=14400
+M161->D:$0028
+M163->D:$080B
+M261->D:$0064
+M263->D:$08CB
+P10=3072
+;************** Motion Program Text for Rotary Axis ****************
+OPEN PROG 10 CLEAR
+SPLINE1TA20
+While (P1 > 0)
+  Q0=M163-M161
+  Q1=M263-M261
+  If (ABS(Q0) > P10ORABS(Q1) > P10)
+    Q2=ATAN2(Q1)
+  EndIf
+  C(Q2)
+EndWhile
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 9:  PLC Input Programming
+
+;********************* Set-up and Definitions ********************
+CLOSE
+M50->Y:$FFC1,0
+M60->*
+;********************* PLC Program Text **************************
+OPEN PLC 16 CLEAR
+If (M50 = 1)
+  If (M60 = 0)
+    COMMAND"#1J+"
+    M60=1
+  EndIf
+Else
+  If (M60 = 1)
+    COMMAND"#1J/"
+    M60=0
+  EndIf
+EndIf
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 10:  PLC Display Programming
+
+;********************* Set up and Definitions *********************
+CLOSE
+UNDEFINE ALL
+#1->-100U+15000
+#2->40C
+M162->D:$002B
+M262->D:$0067
+M100->F:$D400
+M200->F:$D401
+;********************* PLC Program Text ***************************
+OPEN PLC 6 CLEAR
+P162=150-M162/(I108*32*100)
+P262=M262/(I208*32*40)
+M100=P162*COS(P262)
+M200=P162*SIN(P262)
+DISPLAY5,10.2,M100
+DISPLAY15,10.2,M200
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 11:  Precision Slaving
+
+;********************* Set-up and Definitions *********************
+&1
+UNDEFINE ALL
+#1->10000X
+#2->10000Z
+WY:1833,640
+I193=1833
+;********************* Motion Program Text ************************
+OPEN PROG 77 CLEAR
+P100=3
+P101=P100
+RAPIDX(P100-0.1)Z2
+While (P101 < 3.1)
+  P101=P101+0.01
+  TM100
+  X(P101)
+  TM(24*1000/10)
+  Z26
+  TM60
+  X(P100-0.1)
+  TM(24*1000/30)
+  Z2
+EndWhile
+RAPIDX0Z0
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 12: Matching Positions on the Fly
+
+;***************** Set-up and Definitions **********************
+CLOSE
+UNDEFINE ALL
+&1 #1->X
+M11->Y:$FFC2,0,1
+M203->X:$C007,0,24,S
+M217->X:$C004,17,1
+I907=2
+I908=0
+P1=5000
+P2=1325
+;****************** Motion Program Text ************************
+OPEN PROG 346 CLEAR
+INC
+SPLINE1TA10
+While (M11 = 1)
+  While (M217 = 0)
+    X(P10)
+  EndWhile
+  P3=M203%P1
+  P4=P3-P2
+  X(P10+P4/4)
+  X(P10+P4/2)
+  X(P10+P4/4)
+EndWhile
+CLOSE
+;----------------------------------------------------------------------
+;Example 13:  Spindle Operation
+
+;******************** Set-up and definitions *******************
+
+P1=3.14159272
+P95=1000
+P93=40
+M55->*
+M95->*
+M96->*
+M70->*
+M95->*
+M162->D:$002B
+M164->D:$0813
+M191->L:$0822
+M194->L:$0825
+
+;************************** Actual spindle program *************
+CLOSE
+OPEN PROG 1010 CLEAR
+LINEAR
+INC(C)
+TM(1000/P93)
+TA(1000/P93)
+TS0
+P197=0
+While (M55 != 0ORP197 != 0)
+  If (M96 = 1)
+    P162=ABS((M162+M164)/(I108*32))
+    P163=(P162-M194)/M191-P98
+    If (ABS(P163) > 0.1)
+      P97=P96/(2*P1*P163)
+      If (M70 = 0)P97=12*P97
+      ELSEP97=1000*P97
+      If (P97 > P92)
+        P97=P92
+      EndIf
+    Else
+      P97=P92
+    EndIf
+  EndIf
+  If (M55*P97 < P197)M95=-1
+  If (M55*P97 > P197)M95=1
+  If (M95 != 0)
+    P197=P197+M95*P95/P93
+    If ((P197-M55*P97)*M95 > 0)
+      P197=M55*P97
+      M95=0
+    EndIf
+  EndIf
+  C(P197/(60*P93))
+EndWhile
+DWELL50
+M95=0
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 14:  Torque-limited Velocity Move
+
+CLOSE DELETE GATHER DELETE TRACE
+M102->Y:$C003,8,16,S
+P102=3200
+M1=1
+
+OPEN PROG 47 CLEAR
+TA10
+TS0
+TM10
+LINEAR
+INC
+P1=100
+While (M1 = 1)
+  If (M102 < P102)
+    P2=P1
+  Else
+    If (P2 > 0)
+      P2=P2-5
+    Else
+      P2=0
+    EndIf
+  EndIf
+  X(P2)
+EndWhile
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 15:  A Torque Limited Screwing Operation
+
+CLOSE
+UNDEFINE ALL
+&1
+#3->2000Z
+#4->2000C
+M102->Y:$C00A,8,16,S
+P102=4000
+
+OPEN PROG 508 CLEAR
+ABS(C,Z)
+PSETC0
+P1=-5
+TA50
+F10
+Z(P1)
+DWELL5
+TA10TM10
+P2=0
+While (P2 < 3ANDM102 < P102)
+  P1=P1-0.05
+  P2=P2+0.1
+  Z(P1)C(P2)
+EndWhile
+DWELL10
+TA50
+F10
+Z0
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 16:  Altering Destination in Moves
+
+CLOSE
+OPEN PROG 2 CLEAR
+P9=100
+P11=0
+P12=0
+I187=10
+I188=0
+TM10
+While (M1 = 1)
+  P21=P1-P11
+  P22=P2-P12
+  P0=SQRT(P21*P21+P22*P22)
+  If (P0 > P9)
+    P0=P9/P0
+    P11=P11+P21*P0
+    P12=P12+P22*P0
+  Else
+    P11=P1
+    P12=P2
+  EndIf
+  X(P11)Y(P12)
+EndWhile
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 17:  Changing Speed
+
+CLOSE
+OPEN PROG 10 CLEAR
+P4=150000
+P5=3000
+P6=600
+INC(X)
+TM(P5/P6)
+TA(P5/P6)
+P3=P4/(P6*P6)
+P1=0
+P2=0
+n10 While (P0 != 0)
+  If (P1 < P6)
+    P1=P1+1
+    P2=P1*P3
+  EndIf
+  X(P2)
+EndWhile
+While (P0 = 0)
+  If (P1 > 0)
+    P1=P1-1
+    P2=P1*P3
+  EndIf
+  X(P2)
+EndWhile
+GOTO10
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 18:  Circular Interpolation with Linear Moves
+
+CLOSE
+OPEN PROG 10 CLEAR
+
+TA50
+TS0
+F1000
+X10000Y0
+
+Q1=10000Q2=0Q3=5000Q4=-5000Q5=5000
+Q6=1Q7=1Q8=2GOSUB10000
+
+X5000Y0
+
+Q1=5000Q2=0Q3=10000Q4=5000Q5=5000
+Q6=1Q7=0Q8=2GOSUB10000
+
+Q1=Q3Q2=Q4Q3=12500Q4=7500Q5=2500
+Q6=0Q7=0Q8=2GOSUB10000
+
+Q1=Q3Q2=Q4Q3=10000Q4=5000Q5=2500
+Q6=0Q7=1Q8=2GOSUB10000
+
+Q1=Q3Q2=Q4Q3=10000Q4=0Q5=2500
+Q6=1Q7=1Q8=2GOSUB10000
+
+Q1=Q3Q2=Q4Q3=10000Q4=-5005Q5=2500
+Q6=0Q7=0Q8=2GOSUB10000
+DELAY500
+X0Y-5000
+DELAY500
+
+Q1=0Q2=-5000Q3=3535.5Q4=-3535.5Q5=5000
+Q6=0Q7=0Q8=2GOSUB10000
+Q1=Q3Q2=Q4Q3=3535.5Q4=3535.5GOSUB10000
+Q1=Q3Q2=Q4Q3=-3535.5Q4=3535.5GOSUB10000
+Q1=Q3Q2=Q4Q3=-3535.5Q4=-3535.5GOSUB10000
+Q1=Q3Q2=Q4Q3=0Q4=-5000GOSUB10000
+DELAY500
+X0Y0
+RETURN
+
+n10000 If (Q7 > -1)GOSUB20000
+Q0=Q1-Q9
+Q26=ATAN2(Q2-Q10)
+Q0=Q3-Q9
+Q27=ATAN2(Q4-Q10)
+If (Q6 = 0ANDQ27 < Q26)Q27=Q27+360
+If (Q6 = 1ANDQ27 > Q26)Q27=Q27-360
+If (Q6 = 0)
+  Q28=Q26+Q8
+  While (Q28 < Q27)
+    Q11=Q9+Q5*COS(Q28)
+    Q12=Q10+Q5*SIN(Q28)
+    X(Q11)Y(Q12)
+    Q28=Q28+Q8
+  EndWhile
+  X(Q3)Y(Q4)
+Else
+  Q28=Q26-Q8
+  While (Q28 > Q27)
+    Q11=Q9+Q5*COS(Q28)
+    Q12=Q10+Q5*SIN(Q28)
+    X(Q11)Y(Q12)
+    Q28=Q28-Q8
+  EndWhile
+  X(Q3)Y(Q4)
+EndIf
+RETURN
+
+N20000Q20=SQRT((Q3-Q1)*(Q3-Q1)+(Q4-Q2)*(Q4-Q2))
+Q21=Q5*Q5-Q20*Q20/4
+If (Q21 < 0)
+  Q21=0
+  Q5=Q20/2
+EndIf
+Q23=SQRT(Q21)
+Q0=Q3-Q1
+Q24=ATAN2(Q4-Q2)
+Q0=Q20/2
+Q25=ATAN2(Q23)
+If (Q6 = 1ANDQ7 = 1ORQ6 = 0ANDQ7 = 0)
+  Q26=Q24+Q25
+  ELSEQ26=Q24-Q25
+  Q9=Q1+Q5*COS(Q26)
+  Q10=Q2+Q5*SIN(Q26)
+  RETURN
+  
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 19:  Sending Information to a Display
+
+;************************** Setup and Definitions **************
+CLOSE
+M0->X:$0,24
+M85->X:$07F0,24
+M86->X:$07F1,24
+M87->X:$0770,1
+M90->X:$0700,0,24,S
+M130->D:$2B
+M230->D:$67
+M330->D:$A3
+M430->D:$DF
+;************************** PLC programs to do the task ********
+
+OPEN PLC 1 CLEAR
+DISPLAY"#1 POS ="
+DISPLAY20"#2 POS ="
+DISPLAY40"#3 POS ="
+DISPLAY60"#4 POS ="
+P86=333*8388608/I10
+DISABLEPLC1
+CLOSE
+
+OPEN PLC 17 CLEAR
+If (M87 = 0)
+  M85=M0
+  M87=1
+EndIf
+P130=M130/(I108*32)
+P230=M230/(I208*32)
+P330=M330/(I308*32)
+P430=M430/(I408*32)
+M86=M0-M85
+If (M86 > P86)
+  DISPLAY9,10.4,P130
+  DISPLAY29,10.4,P230
+  DISPLAY49,10.4,P330
+  DISPLAY69,10.4,P430
+  M87=0
+EndIf
+CLOSE
+
+OPEN PLC 18 CLEAR
+If (M87 = 0)
+  M90=P86*8388608/I10
+  M87=1
+EndIf
+P130=M130/(I108*32)
+P230=M230/(I208*32)
+P330=M330/(I308*32)
+P430=M430/(I408*32)
+If (M90 < 0)
+  DISPLAY9,10.4,P130
+  DISPLAY29,10.4,P230
+  DISPLAY49,10.4,P330
+  DISPLAY69,10.4,P430
+  M87=0
+EndIf
+CLOSE
+
+;After loading these programs you must set I5=2 or 3 and
+;ENABLE PLC 1 and 17 or 18.  Do not run PLC 17 and 18 at
+;the same time.
+
+;----------------------------------------------------------------------
+;Example 20:  In Position Confirming Routines
+
+; ************************* Setup and Definitions **************
+M1->Y:$FFC2,8,1
+M2->Y:$FFC2,9,1
+M3->Y:$FFC2,10,1
+M4->Y:$FFC2,11,1
+
+M140->Y:$0814,0
+M240->Y:$08D4,0
+M340->Y:$0994,0
+M440->Y:$0A54,0
+M187->Y:$0817,17
+M177->*
+M233->X:$0079,13
+M366->X:$00AB,24
+M466->X:$00E7,24
+;*********** PLC Program to execute In-Position Function********
+
+OPEN PLC 10 CLEAR
+
+If (M140 = 1)
+  If (M177 = 0)
+    M1=1
+    M177=1
+  EndIf
+Else
+  M177=0
+EndIf
+
+If (M233 = 1)
+  If (M240 = 1)
+    P240=P240+1
+    If (P240 !< 10)
+      P240=10
+      M2=1
+    Else
+      M2=0
+    EndIf
+  Else
+    P240=0
+    M2=0
+  EndIf
+Else
+  P240=0
+  M2=0
+EndIf
+
+If (M187 = 1)
+  P366=M366/(I309*32)
+  P466=M466/(I409*32)
+  If (P366 < (I328/64)ANDP466 < (I428/64))
+    M3=1
+  EndIf
+Else
+  M3=0
+EndIf
+CLOSE
+I5=3
+ENABLE PLC 10
+
+;----------------------------------------------------------------------
+;Example 21:  Encoder Modulo Check
+
+;******************** Definitions and setup ********************
+CLOSE
+P50=2000
+I902=1
+M40->*
+M41->*
+M103->X:$C003,0,24,S
+M117->X:$C000,17,1
+
+;************************** PLC Program ************************
+OPEN PLC 4 CLEAR
+If (M40 > 0)
+  If (M40 > 1ANDM117 = 1)
+    P12=P11
+    P11=M103
+    P13=P11-P12
+    If (P13 > P50/2)
+      If (ABS(P13-P50) > 1)
+        M41=1
+      EndIf
+    Else
+      If (P13 < -P50/2)
+        If (ABS(P13+P50) > 1)
+          M41=1
+        EndIf
+      Else
+        If (ABS(P13) > 6)
+          M41=1
+        EndIf
+      EndIf
+    EndIf
+  Else
+    If (M117 = 1)
+      P11=M103
+      M40=2
+    EndIf
+  EndIf
+EndIf
+CLOSE
+M40=0
+M41=0
+ENABLE PLC 4
+
+;----------------------------------------------------------------------
+;Example 22:  Store The Home-Position Encoder Offset
+
+;************************** Set-up and definitions *************
+CLOSE
+M103->X:$C003,0,24,S
+M140->X:$003D,10,1
+M141->*
+;************************** PLC program listing ****************
+OPEN PLC 3 CLEAR
+If (M140 = 1)
+  M141=1
+EndIf
+If (M140 = 0ANDM141 = 1)
+  P103=M103
+  M141=0
+EndIf
+CLOSE
+ENABLE PLC 3
+
+;----------------------------------------------------------------------
+;Example 23:  Pure Position Step
+CLOSE
+DELETE GATHER
+M88->X3,18
+M89->X3,19
+M0->X0,24
+M85->X$07F0,24
+M86->X$07F1,24
+M81->D$28
+
+OPEN PLC 2 CLEAR
+COMMAND"GAT"
+P81=P80*I108*32
+P86=P85*8388608/I10
+M81=M81+P81
+M85=M0
+M86=M0-M85
+While (M86 < P86)
+  M86=M0-M85
+EndWhile
+M81=M81-P81
+M85=M0
+M86=M0-M85
+While (M86 < P86)
+  M86=M0-M85
+EndWhile
+COMMAND"ENDGATHER"
+DISABLEPLC2
+CLOSE
+I5=3
+;First, reserve memory for data gathering with the on-line DEFINE GATHER
+;command (DEF GAT for short).  The step action will be triggered with an
+;"ENABLE PLC 2" command ("ENAPLC2" for short)
+
+;----------------------------------------------------------------------
+;Example 24:  Pulse Output with Motors
+
+;************************** Definitions and Setup **************
+CLOSE
+M101->X:$C001,0,24,S
+M103->X:$C003,0,24,S
+M105->X:$07F0,0,24,S
+M111->X:$C000,11,1
+M112->X:$C000,12,1
+M116->X:$C000,16,1
+P101=50
+;************************** PLC Program ************************
+OPEN PLC 1 CLEAR
+M112=1
+M105=M101+P101
+M103=M105
+M105=M105+P101
+ENABLEPLC0
+DISABLEPLC1
+CLOSE
+
+OPEN PLC 0 CLEAR
+If (M116 = 1)
+  M103=M105
+  M105=M105+P101
+  M111=0
+  M111=1
+EndIf
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 25:  PLC I/O
+
+;************************** Definitions and Setup **************
+
+CLOSE
+M1->Y:$FFC2,8,1
+M2->Y:$FFC2,9,1
+M3->Y:$FFC2,10,1
+M4->Y:$FFC2,11,1
+M11->Y:$FFC2,0,1
+M12->Y:$FFC2,1,1
+M13->Y:$FFC2,2,1
+M14->Y:$FFC2,3,1
+M20..39->*
+;************************** PLC Program ************************
+CLOSE
+OPEN PLC 5 CLEAR
+If (M11 = 1)
+  P1000=5000
+Else
+  P1000=500
+EndIf
+If (M12 = 1)
+  If (M22 = 0)
+    P8=P8+1
+    M22=1
+  EndIf
+Else
+  M22=0
+EndIf
+If (M23 = 1ANDM24 = 1)
+  AND(M25=1ANDM26=1)
+  M1=1
+Else
+  M1=0
+EndIf
+CLOSE
+ENABLE PLC 5
+
+;----------------------------------------------------------------------
+;Example 26:  Circular Interpolation
+
+OPEN PROG 10 CLEAR
+HOME1..8
+F2000
+TA10
+NORMALK-1
+LINEAR
+GOTO1
+N62DWELL1
+M1=0
+F2000
+DWELL100
+RETURN
+N63DWELL1
+M1=1
+F1000
+DWELL100
+RETURN
+N1GOSUB62
+X2082.4Y1778
+GOSUB63
+CIRCLE1X2082.4Y1778I-606.2J0LINEAR
+GOSUB62
+X1880.9716Y2232.2616
+GOSUB63
+CIRCLE2X1070.7003Y2233.1163I-404.7716J345.5384LINEAR
+GOSUB62
+X1930.4225Y1383.0427
+GOSUB63
+CIRCLE2X1937.9537Y2179.4222I345.5775J394.9573LINEAR
+GOSUB62
+X1012.0638Y2163.0278
+GOSUB63
+CIRCLE2X1013.4259Y1394.1638I-335.6638J-385.0278LINEAR
+GOSUB62
+X1071.4245Y1323.7339
+GOSUB63
+CIRCLE2X1885.0458Y1318.9081I404.7755J-345.5339LINEAR
+GOSUB62
+X74Y178.2
+GOSUB63
+X2870.6Y178.2
+X2870.6Y3391.2
+X74Y3391.2
+X74Y178.2
+GOSUB62
+X0Y0
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 27:  Proportional Voltage Output
+
+;************************** Definitions and setup **************
+
+M101->X:$C001,0,24,S
+M201->X:$C005,0,24,S
+M302->Y:$C00B,8,16,S
+M402->Y:$C00A,8,16,S
+M30->*
+;P10=?                ; (constant of proportionality)
+
+;************************** PLC program contents ***************
+CLOSE
+OPEN PLC 3 CLEAR
+If (M30 = 1)
+  M302=P10*M101
+  M402=P10*M201
+Else
+  M302=0
+  M402=0
+EndIf
+CLOSE
+ENABLE PLC 3
+
+;----------------------------------------------------------------------
+;Example 28:  Pulsing a Machine Output
+
+;************************** Definitions and setup **************
+
+M1->Y:$FFC2,8,1
+M20->*
+M101->X:$C001,0,24,S
+M201->X:$C005,0,24,S
+;************************** PLC program contents ***************
+CLOSE
+OPEN PLC 2 CLEAR
+If (M20 = 1)
+  If (M1 = 0)
+    P102=(M101-P101)*(M101-P101)
+    P202=(M201-P201)*(M201-P201)
+    If (SQRT(P102+P202) > 250)
+      M1=1
+      P101=M101
+      P201=M201
+    EndIf
+  Else
+    M1=0
+  EndIf
+EndIf
+CLOSE
+ENABLE PLC 2
+
+;----------------------------------------------------------------------
+;Example 29:  Jogging Motors From A PLC Program
+
+;************************** Setup and definitions **************
+
+CLOSE
+M50->Y:$FFC1,0
+M51->Y:$FFC1,1
+M52->Y:$FFC1,2
+M53->Y:$FFC1,3
+M60->*
+M61->*
+M62->*
+M63->*
+;****************** PLC Program to implement function **********
+OPEN PLC 16 CLEAR
+If (M50 = 1)
+  If (M60 = 0)
+    COMMAND"#1J+"
+    M60=1
+  EndIf
+Else
+  If (M60 = 1)
+    COMMAND"#1J/"
+    M60=0
+  EndIf
+EndIf
+If (M51 = 1)
+  If (M61 = 0)
+    COMMAND"#1J-"
+    M61=1
+  EndIf
+Else
+  If (M61 = 1)
+    COMMAND"#1J/"
+    M61=0
+  EndIf
+EndIf
+If (M52 = 1)
+  If (M62 = 0)
+    COMMAND"#2J+"
+    M62=1
+  EndIf
+Else
+  If (M62 = 1)
+    COMMAND"#2J/"
+    M62=0
+  EndIf
+EndIf
+If (M53 = 1)
+  If (M63 = 0)
+    COMMAND"#2J-"
+    M63=1
+  EndIf
+Else
+  If (M63 = 1)
+    COMMAND"#2J/"
+    M63=0
+  EndIf
+EndIf
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 30:  Open-loop Movement
+
+;************************** Set-up and Definitions *************
+CLOSE
+M102->Y:$C003,8,16,S
+M162->D:$002C
+M163->D:$080B
+M165->L:$081F
+;************************** Example motion program *************
+OPEN PROG 12 CLEAR
+While (1 < 2)
+  While (M1 = 0)
+    INC
+    TM50
+    X100
+  EndWhile
+  DWELL50
+  DWELL50
+  I129=M102
+  I130=0
+  I163=0
+  I133=0
+  I111=0
+  While (M1 = 1)
+    M163=M162
+    DWELL10
+  EndWhile
+  M163=M162
+  M165=M162/(I108*32)
+  DWELL5
+  DWELL5
+  P129=I129
+  P130=8000
+  P131=0
+  I163=8000000
+  I133=50000
+  While (P131 < 10)
+    I129=I129-P129/10
+    I130=I130+P130
+    P131=P131+1
+    DWELL20
+  EndWhile
+  I129=0
+  I111=32000
+  While (M2 = 0)
+    DWELL50
+  EndWhile
+  M2=0
+EndWhile
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 31:  Inverse Kinematics
+
+;************************** Set-up and definitions *************
+UNDEFINE ALL
+#3->5000U
+#4->13.889C
+I15=0
+Q21=5
+Q22=0
+;************************** Example motion program *************
+CLOSE
+OPEN PROG 500 CLEAR
+READ(X,Y)
+Q12=Q10*Q11/1000
+Q14=Q24
+Q15=Q25
+SPLINE1
+TA(Q11)
+Q16=0
+While (Q16 < 1)
+  
+  Q34=Q124-Q14
+  Q35=Q125-Q15
+  Q36=SQRT(Q34*Q34+Q35*Q35)
+  If (Q36 > Q12)
+    Q37=Q12/Q36
+    
+    Q14=Q14+Q34*Q37
+    Q15=Q15+Q35*Q37
+  Else
+    Q14=Q124
+    Q15=Q125
+    Q24=Q124
+    Q25=Q125
+    Q16=1
+  EndIf
+  
+  Q17=Q21-SQRT(Q14*Q14+Q15*Q15)
+  Q28=Q18
+  Q0=Q14
+  Q18=ATAN2(Q15)+Q22
+  If (Q18-Q28 > 180)Q8=Q8-360
+  If (Q18-Q28 < -180)Q8=Q8+360
+  U(Q17)C(Q18+Q8)
+EndWhile
+CLOSE
+
+OPEN PROG 25 CLEAR
+Q10=2
+Q11=30
+CALL500X2Y2
+DWELL100
+M1=1
+CALL500X2Y-2
+DWELL100
+CALL500X-2Y-2
+DWELL100
+CALL500X-2Y2
+DWELL100
+CALL500X2Y2
+DWELL100
+M1=0
+CALL500X-5Y0
+CLOSE
+
+;Start-up data: needed only before the first running.
+Q24=-Q21
+Q25=-Q22
+Q8=0
+Q18=0
+
+;----------------------------------------------------------------------
+;Example 32:  Orientation of a Rotary Head
+
+;************************** Set-up and definitions *************
+CLOSE
+I13=10
+I15=0
+I427=14400
+I194=2000000
+M161->D:$0028
+M163->D:$080B
+M261->D:$0064
+M263->D:$08CB
+M150->X:$0818,0
+M151->X:$0038,15
+M1->Y:$FFC2,8
+UNDEFINE ALL
+&1
+#1->10000X
+#2->10000Y
+&2
+#3->1000Z
+#4->40C
+;************************** Example motion program *************
+OPEN PROG 2 CLEAR
+FRAX(C,Z)
+ABS
+Q10=I108*32
+COMMAND"&1%0"
+F10
+C0
+DWELL5
+Q2=0
+COMMAND"&1%100"
+While (M150 = 1)
+  If (M151 = 1)
+    COMMAND"&1%0"
+    F5
+    Z0
+    While (M151 = 1)WAIT
+    If (M1 = 1)
+      GOSUB1000
+      F10
+      C(Q2)
+      Z10
+    EndIf
+    DWELL5
+    DWELL5
+    COMMAND"&1%100"
+  EndIf
+  TM20
+  While (M150 = 1ANDM151 = 0)
+    GOSUB1000
+    C(Q2)
+  EndWhile
+EndWhile
+RETURN
+N1000Q0=M163-M161
+Q1=M263-M261
+If (ABS(Q0) > Q10ORABS(Q1) > Q10)
+  Q2=ATAN2(Q1)
+EndIf
+RETURN
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 33:  Time Base Following
+
+;************************** Example system parameters **********
+;Spindle axis:
+;	Resolution: 100 lines/rev = 400 cts/rev
+;	Max speed: 15,000 rpm = 100 cts/msec
+;	Min slew speed: 100 rpm = 0.667 cts/msec
+;	"Real-time" frequency = 64 cts/msec (want power of 2; want max less than 200%)
+;	Scale-factor: 131,072/64 = 2048
+;	At "real-time": 6.25 msec/rev
+
+;Traverse axis:
+;	Resolution: 1000 lines/in = 4000 cts/in
+;************************** PMAC Setup and Definitions *********
+CLOSE
+UNDEFINE ALL
+I103=$720
+WY$728,$400720
+WY$729,2048
+&1
+#1->400X
+I193=$0806
+I303=$722
+&2
+#3->4000Y
+I293=$08C6
+I294=8388607
+Q3=6.25
+;************************** Spindle Program ********************
+OPEN PROG 1 CLEAR
+I293=1833
+TS0
+TA(Q5*1000)
+F(Q6)
+INC
+X(Q7)
+DWELL10
+DWELL10
+I293=2246
+COMMAND"&2Q"
+DWELL500
+M1=1
+COMMAND"#3HM"
+CLOSE
+
+OPEN PROG 2 CLEAR
+I293=1833
+TS0
+TA3
+Q1=0
+Q2=Q519
+TM(Q3*Q12)
+While (Q1 < Q2)
+  Y(Q11*Q12)
+  DELAY0
+  Q1=Q1+Q12
+  If (Q1 < Q2)
+    Y0
+    DELAY0
+    Q1=Q1+Q12
+  EndIf
+EndWhile
+CLOSE
+;*********** Parameters to set up a specific winding application ***********
+&1
+Q5=5
+Q6=2000
+Q7=3000
+&2
+Q11=0.005
+Q12=200
+
+;----------------------------------------------------------------------
+;Example 34:  Move Until Trigger
+
+;************************** Set-up and Definitions *************
+M103->X:$C003,0,24,S
+M117->X:$C000,17,1
+I902=2
+I903=0
+I190=1000
+M191->L:$0822
+M194->L:$0825
+;************************** Motion Program *********************
+OPEN PROG 3 CLEAR
+ABS
+TA50
+TS0
+F10
+P100=5
+X(P100)
+TM10
+TA10
+P99=M103
+While (M117 = 0)
+  P100=P100+0.1
+  X(P100)
+EndWhile
+P104=M103-P103
+P105=(P104-M194)/M191
+TA50
+F10
+X(P105+0.75)
+DWELL100
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 35:  Linear and Circular Moves
+
+CLOSE
+OPEN PROG 55 CLEAR
+NORMALK-1
+RAPID
+X10Y5
+M1=1
+LINEAR
+F10
+X30Y5
+CIRCLE2
+X35Y10J5
+LINEAR
+X35Y50
+CIRCLE2
+X30Y55I-5
+LINEAR
+X10Y55
+CIRCLE2
+X5Y50J-5
+LINEAR
+X5Y10
+CIRCLE2
+X10Y5I5
+DWELL10
+M1=0
+RAPID
+X0Y0
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 36:  Motion Program Execution
+
+CLOSE
+UNDEFINE ALL
+&1
+#1->X
+&2
+#2->X
+&3
+#3->X
+&4
+#4->X
+&5
+#5->X
+&6
+#6->X
+&7
+#7->X
+&8
+#8->X
+
+M1..8->*
+M1..8=0
+P1..8=0
+
+OPEN PLC 1 CLEAR
+If (M1 = 1ANDP1 = 0)
+  COMMAND"&1B1R"
+  P1=1
+EndIf
+If (M1 = 0ANDP1 = 1)
+  COMMAND"&1Q"
+  P1=0
+EndIf
+If (M2 = 1ANDP2 = 0)
+  COMMAND"&2B1R"
+  P2=1
+EndIf
+If (M2 = 0ANDP2 = 1)
+  COMMAND"&2Q"
+  P2=0
+EndIf
+If (M3 = 1ANDP3 = 0)
+  COMMAND"&3B1R"
+  P3=1
+EndIf
+If (M3 = 0ANDP3 = 1)
+  COMMAND"&3Q"
+  P3=0
+EndIf
+If (M4 = 1ANDP4 = 0)
+  COMMAND"&4B1R"
+  P4=1
+EndIf
+If (M4 = 0ANDP4 = 1)
+  COMMAND"&4Q"
+  P4=0
+EndIf
+If (M5 = 1ANDP5 = 0)
+  COMMAND"&5B1R"
+  P5=1
+EndIf
+If (M5 = 0ANDP5 = 1)
+  COMMAND"&5Q"
+  P5=0
+EndIf
+If (M6 = 1ANDP6 = 0)
+  COMMAND"&6B1R"
+  P6=1
+EndIf
+If (M6 = 0ANDP6 = 1)
+  COMMAND"&6Q"
+  P6=0
+EndIf
+If (M7 = 1ANDP7 = 0)
+  COMMAND"&7B1R"
+  P7=1
+EndIf
+If (M7 = 0ANDP7 = 1)
+  COMMAND"&7Q"
+  P7=0
+EndIf
+If (M8 = 1ANDP8 = 0)
+  COMMAND"&8B1R"
+  P8=1
+EndIf
+If (M8 = 0ANDP8 = 1)
+  COMMAND"&8Q"
+  P8=0
+EndIf
+CLOSE
+
+OPEN PROG 1 CLEAR
+ABS
+TA500
+TS10
+F10000
+N10X10000
+DWELL400
+X0
+DWELL400
+GOTO10
+CLOSE
+
+I5=2
+ENABLE PLC1
+
+;----------------------------------------------------------------------
+;Example 37:  G-code Programming
+
+CLOSE	; Close any previously opened buffer
+OPEN PROG 6 CLEAR
+G17
+G20
+G90
+G94
+F100
+G0X1Y4
+M3S1800
+G1Z0.1
+M8
+Z0
+Y12
+G2X2Y13I1J0
+G1X3
+G2X4Y12I0J-1
+G1Y6
+G3X7Y4I3J0
+G1X13
+G2X14Y3I0J-1
+G1Y2
+G2X13Y1I-1J0
+G1X4
+G2X1Y4I0J4
+G1Z0.1
+X3Y3
+Z0
+G2I0.5J0.5
+G1Z0.1
+X2Y11
+Z0
+G2I0.5J0.5
+G1Z0.1
+X12Y2
+Z0
+G2I0.5J0.5
+G1Z0.1
+M9
+Z1
+G0X0Y0
+M5
+CLOSE
+
+; Here are some M-variable definitions for the G-code routines...
+M163->D:$080B
+M165->L:$081F
+M191->L:$0822
+M194->L:$0825
+M263->D:$080B
+M265->L:$081F
+M292->L:$0823
+M294->L:$0824
+M363->D:$098B
+M365->L:$0821
+M393->L:$09A4
+M394->L:$09A5
+
+OPEN PROG 1000 CLEAR
+RAPIDRETURN
+N1000LINEARRETURN
+N2000CIRCLE1RETURN
+N3000CIRCLE2RETURN
+N17000NORMALK-1
+RETURN
+N20000M191=2000
+M292=2000
+M393=2000
+P163=M163/(I108*32)
+M165=(P163-M194)/M191
+P263=M263/(I208*32)
+M265=(P263-M294)/M292
+P363=M363/(I308*32)
+M365=(P363-M394)/M393
+M70=0
+RETURN
+N90000ABS
+M90=1
+RETURN
+N94000I190=60000
+I193=2054
+RETURN
+CLOSE
+
+OPEN PROG 1001 CLEAR
+N3000READ(S)
+If (Q100&262144 > 0)
+  I422=Q119/30
+EndIf
+COMMAND"#4J+"
+RETURN
+N5000COMMAND"#4J/"
+RETURN
+M1=0
+RETURN
+N9000M1=0
+RETURN
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 38:  Delayed Program Execution
+
+UNDEFINE ALL
+&1
+#1->X
+I190=1000
+Q1=0
+&2
+#2->X
+I290=1000
+Q1=400
+
+OPEN PROG 1 CLEAR
+Q2=0
+ABS
+TA100
+TS0
+F10000
+DELAY(Q1)
+While (Q2 < 10)
+  X2000
+  DELAY250
+  X4000
+  DELAY250
+  X6000
+  DELAY250
+  X0
+  DELAY250
+  Q2=Q2+1
+EndWhile
+CLOSE
+
+;----------------------------------------------------------------------
+;Example 39:  Integrated Current Limiting
+
+;************************** Set-up and definitions *************
+CLOSE
+M132->X:0045,8,16,S
+P130=16384*16384
+P131=512
+;************************** Actual PLC Program ******************
+
+OPEN PLC 1 CLEAR
+P132=0
+DISABLEPLC1
+CLOSE
+
+OPEN PLC 5 CLEAR
+P132=((P131-1)*P132+M132*M132)/P131
+If (P132 > P130)
+  COMMAND"&1A"
+  COMMAND"#1K"
+  SEND"Motor 1 I2T Limit Trapped"
+  M1=1
+  P132=0
+EndIf
+CLOSE
+
+;----------------------------------------------------------------------
+
+

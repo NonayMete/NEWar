@@ -1,0 +1,45 @@
+CLOSE 
+CLOSE
+
+; USE CS &1
+
+&1
+#1->1000X
+
+; Define anything you need
+
+M1->*
+M1->Y:$FFC2,8,8,U
+
+; Do the program
+
+OPEN PROG 32
+CLEAR
+
+LINEAR
+ABS
+
+TA(P1)
+TS250
+TM1500
+
+M1 == 1
+X(P2)
+M1 ==  0
+DELAY(P3)
+
+M1 == 2
+X(P4)
+M1 ==  0
+DELAY1500
+
+TA250
+TS125
+TM750
+
+M1 == 4
+X0
+M1 == 0
+DWELL 100
+
+CLOSE

@@ -1,0 +1,29 @@
+;*************** Motion Program Set-up variables (to be saved) 
+
+CLOSE
+
+M320->X:$C008,20,1	; Variable for HMFL3 input
+
+;************** Motion program to execute routine *********************
+
+OPEN PROG 103 CLEAR
+
+I325=$C008			; Use Flags3 for Motor 3
+
+IF (M320=1)	; Already in trigger?
+  I323=10	; Home speed 10 cts/msec positive direction
+  I326=1600	; Home offset +100 counts (to make sure clear)
+  I912=11	; Capture on falling flag and rising index
+  I913=0	; Use HMFL3 as flag
+  HOME3	; "Home" out of switch
+ENDIF
+
+I323=-10	; Home speed 10 cts/msec negative direction
+I326=0	; No home offset
+I912=3	; Capture on rising flag and rising index
+I913=0	; Use HMFL3 as flag
+
+HOME3		; Do actual homing move
+
+CLOSE		; End of program
+

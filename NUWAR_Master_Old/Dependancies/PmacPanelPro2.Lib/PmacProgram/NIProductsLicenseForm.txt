@@ -1,0 +1,66 @@
+National Instruments - Products Activation Request Information
+
+Products Activation Information
+
+	Computer ID:	VB6M-8ZS6-FBHQ-CYLG
+
+	Feature:	LabVIEW 8.6 Development System
+	Version:	8.6
+	Serial Number:	G12X18706
+
+	Feature:	LabVIEW 8.6 Control Design and Simulation Module
+	Version:	8.6
+	Serial Number:	G12X18706
+
+	Feature:	LabVIEW 8.6 Digital Filter Design Toolkit
+	Version:	8.6
+	Serial Number:	G12X18706
+
+	Feature:	LabVIEW System Identification Toolkit 4.0
+	Version:	4.0
+	Serial Number:	G12X18706
+
+
+Directions:
+
+1. To activate your products via the Web, go to ni.com/activate and follow the
+   directions. All of the information you will need is listed above.
+
+2. To activate your products via email, attach this file to an empty email with
+   no subject line and send it to activate@ni.com. You will receive a return
+   email containing your activation codes within one business day of your
+   request being sent, although typical response time is less than ten minutes.
+
+3. To activate your products over the phone, contact a National Instruments
+   Customer Service Representative. If you reside in the United States or
+   Canada, please call (888) 280-7645. Otherwise, contact the nearest
+   National Instruments branch office.
+
+
+DO NOT MODIFY THE FOLLOWING LINES
+****************************************
+
+email=
+FirstName=Mechanical
+LastName=Engineering
+Organization=UWA
+SerialNum=G12X18706%2CG12X18706%2CG12X18706%2CG12X18706
+Feature=LabVIEW_ADE_080600%2CLabVIEW_CDSim_PKG%2CLabVIEW_DigFilter_PKG%2CLabVIEW_SysID_PKG
+Version=8.6%2C8.6%2C8.6%2C4.0
+MachineId=VB6M-8ZS6-FBHQ-CYLG
+OsType=Windows
+Locale=US
+ExpDate=%2C%2C%2C
+BatchFeatures=CDA_Full_PKG%2CLabVIEW_AppBuilder_PKG%2CLabVIEW_RemotePanel_080600%2CNIIMAQ1394_1394_PKG%2CSignalExpress_ADE_030000%2CSysIDA_Full_PKG%2CVision_VisionAsst_PKG%2CVision_VisionRunTime_PKG%2CVision_Vision_PKG
+BatchVersions=3.0%2C8.6%2C8.6%2C8.6%2C3.0%2C4.0%2C8.6%2C8.6%2C8.6
+NiLmVersion=3.3
+registerProduct=N
+rPhone=
+rFax=
+rAddress1=
+rAddress2=
+rCity=
+rStateProv=
+rPostalCode=
+rCountry=
+rEmail=

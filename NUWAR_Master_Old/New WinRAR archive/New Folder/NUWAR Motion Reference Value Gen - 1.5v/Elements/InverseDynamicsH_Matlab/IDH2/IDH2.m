@@ -1,0 +1,88 @@
+% function [Q, lamda, q, dq]=IDH2(timepos, timetheta, alpha, beta, diffpoints)
+%
+% Hamiltonian Inverse Dynamics Function 2
+%
+% This function solves the inverse dynamics problem for an entire trajectory using the hamiltonian
+% formulation of the equations of motion. The inverse dynamic calulations are solved on a point-by-point 
+% basis using the function IDHpoint2(q, dq, dp, alpha, beta). The inputs q, dq and dp are obtained by performing 
+% calculations on the kinematic data for the entire trajectory using the functions q_dq and p_dp. 
+% This function uses a faster formulation for the lagrange multipliers. However, it only works for non zero alpha and beta.
+%
+% Input Parameters:
+%		timepos		= the time-position data for the travelling plate.
+%		timetheta	= the time-angle data for the three motors.
+%		alpha		= the orientation of the motors in the 'alpha' direction.
+%		beta		= the orientation of the motors in the 'beta' direction.
+%		diffpoints	= 3 or 5 (the number of points to use for numerical differntiation.
+%
+% Default values:
+% 		timepos		= required.
+%		timetheta 	= required.
+%		alpha		= -35.26 degrees.
+% 		beta		= 60 degrees.
+% 		diffpoints  	= 5 (5 point differentiation scheme).
+%
+% Output values:
+%     Q 			= vector of motor torques.
+%     lambda 	= vector of Lagrange multipliers.
+% 		q			= vector of NUWAR position data.
+% 		dq			= vector of NUWAR velocity data.
+%
+% Required Functions:
+%		IDHpoint2
+%		q_dq
+%		p_dp
+%		matrixdiff
+%		InitArms
+%		InitDynamics
+% 
+% All distances are in metres, and all angles in degrees.
+%
+% Author: Ben Hawkey 2000.
+
+
+function [Q, lamda, q, dq]=IDH2(timepos, timetheta, alpha, beta, diffpoints)
+
+%Set defaults:
+
+if nargin < 2
+   disp('Insufficient parameters');
+   help IDH;
+   return
+end
+
+if nargin < 3 | isempty(alpha)
+   alpha = -asin(1/sqrt(3))*180/pi;    % Function defaults to alpha value for NUWAR configuration.
+end
+
+if nargin < 4 | isempty(beta)
+	beta = 60;      % Function defaults to beta value for NUWAR configuration.
+end 
+
+if nargin < 5 | isempty(diffpoints)
+   diffpoints = 5; % Function defaults to 5 point numerical differentiation scheme.
+end
+
+alpha  = pi/180*alpha;
+
+beta = pi/180*beta;
+
+timetheta(:,2:4)=(pi/180).*timetheta(:,2:4);
+%All operations use radians instead of degrees.
+
+step = timepos(2,1)-timepos(1,1);
+%This determines the time interval between samplepoints.
+
+samp = size(timepos,1);
+% Number of sample points
+
+[q,dq]=q_dq(timepos, timetheta, step, samp, diffpoints);
+
+[p,dp]=p_dp(q,dq,alpha, beta, step, samp, diffpoints);
+
+
+for c = 1:samp
+   [Q(c,:), lamda(c,:)] = IDHpoint2(q(c,:), dq(c,:), dp(c,:), alpha, beta);
+end
+
+

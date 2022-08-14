@@ -1,0 +1,22 @@
+;*********** Motion Program Set-up Variables (to be saved) 
+
+CLOSE
+
+;**************** Motion program to execute routine 
+
+OPEN PROG 101 CLEAR
+
+I123=-10	; Home speed 10 cts/msec negative
+I125=$C000	; Use Flags1 for Motor 1 (limits enabled)
+I126=32000	; Home offset of +2000 counts
+                   	; (enough to take you out of the limit)
+
+I902=3	; Capture on rising flag and rising index
+I903=2	; Use +LIM1 as flag (negative end switch)
+
+I125=$2C000	; Disable +/-LIM as limits
+HOME1	; Home #1 into limit and offset out of it
+I125=$C000	; Re-enable +/-LIM as limits
+
+CLOSE	; End of program
+

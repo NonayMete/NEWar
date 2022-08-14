@@ -1,0 +1,36 @@
+;Log created by PMAC Win32 Driver from file: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.pmc
+;
+000001:            Compiling for PLCC: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.PMA = D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.56K
+000002:            PLCC Compiling PMAC file: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.pmc
+000003:            Success in Compiling to output file: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.56K
+000004:            No PLCC(s) were compiled
+000005:            Downloading file: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.56K
+000006:            **PMAC Error 3, Data error or unrecognized command.
+000007:              File: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.56K
+000008:              Line: 4, "#3->10X"
+000009:            **PMAC Error 3, Data error or unrecognized command.
+000010:              File: D:\Software Engineering\PmacPanelPRO\PMACPanel.lib\PmacGather\PmacGatherCircleTest.56K
+000011:              Line: 5, "#4->10Y"
+000012:            **PMAC Error 6, No room in buffer for command.
+000013:              File: hm1..4
+000014:              Line: 11, "I13 = 100"
+000015:            **PMAC Error 6, No room in buffer for command.
+000016:              File: hm1..4
+000017:              Line: 13, "F2000"
+000018:            **PMAC Error 6, No room in buffer for command.
+000019:              File: hm1..4
+000020:              Line: 14, "TA10"
+000021:            **PMAC Error 6, No room in buffer for command.
+000022:              File: hm1..4
+000023:              Line: 15, "NORMAL K-1"
+000024:            **PMAC Error 6, No room in buffer for command.
+000025:              File: hm1..4
+000026:              Line: 16, "LIN"
+000027:            **PMAC Error 6, No room in buffer for command.
+000028:              File: hm1..4
+000029:              Line: 18, "X3000 Y1000"
+000030:            **PMAC Error 6, No room in buffer for command.
+000031:              File: hm1..4
+000032:              Line: 19, "CIR 1 X3000 Y1000 I-1000 J 1000"
+000033:            Total Warnings: 0
+000034:            Total Errors: 9

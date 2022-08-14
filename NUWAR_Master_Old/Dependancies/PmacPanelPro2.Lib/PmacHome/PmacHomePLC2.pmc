@@ -1,0 +1,38 @@
+CLOSE 
+
+M233->X:$0079,13,1	; Desired Velocity Zero bit
+M245->Y:$08D4,10,1	; Home complete bit
+
+OPEN PLC 11 CLEAR
+
+I223=10	; Home speed 10 cts/msec positive direction
+I225=$2C004	; Disable +/-LIM2 as limits
+I226=0	; No home offset
+I907=2	; Capture on rising edge of a flag
+I908=1	; Use -LIM2 as flag (positive end limit!)
+
+CMD"#2HM"	; Home into limit
+
+WHILE (M245=1)	; Waits for Home Search to start
+ENDWHILE
+
+WHILE (M233=0)	; Waits for Home motion to complete
+ENDWHILE
+
+I223=-10	; Home speed 10 cts/msec negative direction
+I225=$C004	; Re-enable +/-LIM2 as limits
+I907=11	; Capture on flag low and index channel high
+I908=0	; Use HMFL2 (home flag) as trigger flag
+
+CMD"#2HM" 	; Do actual homing move
+
+WHILE (M245=1)	; Waits for Home Search to start
+ENDWHILE
+
+WHILE (M233=0)	; Waits for Home motion to complete
+ENDWHILE
+
+DIS PLC11		; Disables PLC once Home is found
+
+CLOSE			; End of PLC
+

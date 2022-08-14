@@ -1,0 +1,8 @@
+﻿  Example-GPIO.cpp
+  Copying sFoundation Files
+  cwd=C:\Program Files (x86)\Teknic\ClearView\sdk\examples\ srcArch=Win32 srcConfig=Debug dllDir=..\sFoundation Source\sFoundation\win\Debug\Win32 destDir="C:\Program Files (x86)\Teknic\ClearView\sdk\examples\4-Example-GPIO\Win32\Debug\"
+          1 file(s) copied.
+          1 file(s) copied.
+          1 file(s) copied.
+     Creating library C:\Program Files (x86)\Teknic\ClearView\sdk\examples\4-Example-GPIO\Win32\Debug\Example-GPIO.lib and object C:\Program Files (x86)\Teknic\ClearView\sdk\examples\4-Example-GPIO\Win32\Debug\Example-GPIO.exp
+  Example-GPIO.vcxproj -> C:\Program Files (x86)\Teknic\ClearView\sdk\examples\4-Example-GPIO\Win32\Debug\Example-GPIO.exe

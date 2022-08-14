@@ -1,0 +1,8 @@
+﻿  HelloWorld.cpp
+  Copying sFoundation Files
+  cwd=C:\Program Files (x86)\Teknic\ClearView\sdk\examples\ srcArch=Win32 srcConfig=Debug dllDir=..\sFoundation Source\sFoundation\win\Debug\Win32 destDir="C:\Program Files (x86)\Teknic\ClearView\sdk\examples\1-HelloWorld\Win32\Debug\"
+          1 file(s) copied.
+          1 file(s) copied.
+          1 file(s) copied.
+     Creating library C:\Program Files (x86)\Teknic\ClearView\sdk\examples\1-HelloWorld\Win32\Debug\HelloWorld.lib and object C:\Program Files (x86)\Teknic\ClearView\sdk\examples\1-HelloWorld\Win32\Debug\HelloWorld.exp
+  HelloWorld.vcxproj -> C:\Program Files (x86)\Teknic\ClearView\sdk\examples\1-HelloWorld\Win32\Debug\HelloWorld.exe

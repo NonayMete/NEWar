@@ -1,0 +1,8 @@
+﻿  Axis.cpp
+  Example-SingleThreaded.cpp
+  Copying sFoundation Files
+  cwd=C:\Users\jakel\OneDrive\Lorkin Consulting\NEWAR Parallel Robot\Software\sdk\examples\ srcArch=Win32 srcConfig=Debug dllDir=..\sFoundation Source\sFoundation\win\Debug\Win32 destDir="C:\Users\jakel\OneDrive\Lorkin Consulting\NEWAR Parallel Robot\Software\sdk\examples\5-Example-SingleThreaded(Polling)\Win32\Debug\"
+          1 file(s) copied.
+          1 file(s) copied.
+          1 file(s) copied.
+  Example-SingleThreaded.vcxproj -> C:\Users\jakel\OneDrive\Lorkin Consulting\NEWAR Parallel Robot\Software\sdk\examples\5-Example-SingleThreaded(Polling)\Win32\Debug\Example-SingleThreaded.exe
